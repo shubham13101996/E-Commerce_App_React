@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -11,8 +11,12 @@ import { Link } from "react-router-dom";
 import { DELETE } from "../redux/actions/action";
 
 const Header = () => {
+  const [price, setPrice] = useState(0);
+  console.log(price);
+
   const getData = useSelector((state) => state.cartReducer.carts);
   console.log(getData);
+
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,6 +31,18 @@ const Header = () => {
   const remove = (id) => {
     dispatch(DELETE(id));
   };
+
+  const total = () => {
+    let price = 0;
+    getData.map((elem, k) => {
+      price += elem.price;
+    });
+    setPrice(price);
+  };
+
+  useEffect(() => {
+    total();
+  }, [total]);
 
   return (
     <>
@@ -125,7 +141,7 @@ const Header = () => {
                       </>
                     );
                   })}
-                  <p className="text-center">Total: ₹300</p>
+                  <p className="text-center">Total: ₹{price}</p>
                 </tbody>
               </Table>
             </div>
