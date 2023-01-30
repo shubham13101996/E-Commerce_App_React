@@ -6,12 +6,14 @@ import Badge from "@mui/material/Badge";
 import { NavLink, Table } from "react-bootstrap";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useSelector } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import { Link } from "react-router-dom";
+import { DELETE } from "../redux/actions/action";
 
 const Header = () => {
   const getData = useSelector((state) => state.cartReducer.carts);
   console.log(getData);
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -20,6 +22,10 @@ const Header = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const remove = (id) => {
+    dispatch(DELETE(id));
   };
 
   return (
@@ -95,11 +101,17 @@ const Header = () => {
                                 fontSize: 20,
                                 cursor: "pointer",
                               }}
+                              onClick={() => {
+                                remove(elem.id);
+                              }}
                             >
                               <i className="fas fa-trash smalltrash"></i>
                             </p>
                           </td>
                           <td
+                            onClick={() => {
+                              remove(elem.id);
+                            }}
                             className="mt-5"
                             style={{
                               color: "red",

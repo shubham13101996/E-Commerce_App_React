@@ -5,3 +5,10 @@ const ADD = (item) => {
   };
 };
 export default ADD;
+
+export const DELETE = (id) => {
+  return {
+    type: "REMOVE_CART",
+    payload: id,
+  };
+};

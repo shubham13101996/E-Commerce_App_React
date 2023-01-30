@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux/es/exports";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { DELETE } from "../redux/actions/action";
 
 const CardsDetails = () => {
   const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ const CardsDetails = () => {
   const { id } = useParams();
   const getData = useSelector((state) => state.cartReducer.carts);
   // console.log(getData);
-
+  const history = useNavigate();
   const compare = () => {
     let comparaData = getData.filter((e) => {
       return e.id == id;
@@ -21,6 +22,12 @@ const CardsDetails = () => {
     compare();
   }, [id]);
 
+  const dispatch = useDispatch();
+
+  const remove = (id) => {
+    dispatch(DELETE(id));
+    history("/");
+  };
   return (
     <>
       <div className="container mt-2">
@@ -71,7 +78,7 @@ const CardsDetails = () => {
                           </p>
                           <p>
                             <strong>Remove :</strong>{" "}
-                            <span>
+                            <span onClick={() => remove(elem.id)}>
                               <i
                                 className="fas fa-trash"
                                 style={{
