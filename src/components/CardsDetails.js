@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { DELETE } from "../redux/actions/action";
-
+import ADD from "../redux/actions/action";
 const CardsDetails = () => {
   const [data, setData] = useState([]);
   // console.log(data);
@@ -23,6 +23,11 @@ const CardsDetails = () => {
   }, [id]);
 
   const dispatch = useDispatch();
+
+  const send = (item) => {
+    // console.log(item);
+    dispatch(ADD(item));
+  };
 
   const remove = (id) => {
     dispatch(DELETE(id));
@@ -57,6 +62,24 @@ const CardsDetails = () => {
                           <p>
                             <strong>Total :</strong> ₹300
                           </p>
+                          <div
+                            className="mt-5 d-flex justify-content-between align-items-center"
+                            style={{
+                              width: 100,
+                              cursor: "pointer",
+                              background: "#ddd",
+                              color: "#111",
+                            }}
+                          >
+                            <span style={{ fontSize: 24 }}>-</span>
+                            <span style={{ fontSize: 24 }}>{elem.qnty}</span>
+                            <span
+                              style={{ fontSize: 24 }}
+                              onClick={() => send(elem)}
+                            >
+                              +
+                            </span>
+                          </div>
                         </td>
                         <td>
                           <p>
