@@ -7,13 +7,13 @@ import CardsDetails from "./components/CardsDetails";
 
 const App = () => {
   return (
-    <div>
+    <>
       <Header />
       <Routes>
-        <Route path="/" element={<Cards />} />
-        <Route path="/cart" element={<CardsDetails />} />
+        <Route exact path="/" element={<Cards />} />
+        <Route path="/cart/:id" element={<CardsDetails />} />
       </Routes>
-    </div>
+    </>
   );
 };
 

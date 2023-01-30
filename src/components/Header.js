@@ -7,6 +7,7 @@ import { NavLink, Table } from "react-bootstrap";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useSelector } from "react-redux/es/exports";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const getData = useSelector((state) => state.cartReducer.carts);
@@ -25,13 +26,13 @@ const Header = () => {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <NavLink to="/" className="text-decoration-none text-light mx-3">
+          <Link to="/" className="text-decoration-none text-light mx-3">
             Add To Cart
-          </NavLink>
+          </Link>
           <Nav className="me-auto">
-            <NavLink to="/" className="text-decoration-none text-light">
+            <Link to="/" className="text-decoration-none text-light">
               Home
-            </NavLink>
+            </Link>
           </Nav>
           <Badge
             badgeContent={getData.length}
@@ -67,7 +68,7 @@ const Header = () => {
                 <thead>
                   <tr>
                     <th>Photo</th>
-                    <th>Restaurant Name</th>
+                    <th>Dish Name</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -76,16 +77,18 @@ const Header = () => {
                       <>
                         <tr>
                           <td>
-                            <img
-                              src={elem.imgdata}
-                              style={{ width: "5rem", height: "5rem" }}
-                              alt="item-image"
-                            />
+                            <Link to={`/cart/${elem.id}`} onClick={handleClose}>
+                              <img
+                                src={elem.imgdata}
+                                style={{ width: "5rem", height: "5rem" }}
+                                alt="item-image"
+                              />
+                            </Link>
                           </td>
                           <td>
                             <p>{elem.rname}</p>
-                            <p>price: ₹{elem.price}</p>
-                            <p>Quantity:{elem.qnty}</p>
+                            <p>price : ₹{elem.price}</p>
+                            <p>Quantity : {elem.qnty}</p>
                             <p
                               style={{
                                 color: "red",
@@ -104,12 +107,13 @@ const Header = () => {
                               cursor: "pointer",
                             }}
                           >
-                            <i className="fas fa-trash"></i>
+                            <i className="fas fa-trash largetrash"></i>
                           </td>
                         </tr>
                       </>
                     );
                   })}
+                  <p className="text-center">Total: ₹300</p>
                 </tbody>
               </Table>
             </div>
